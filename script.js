@@ -20,6 +20,10 @@ document.querySelectorAll("section, .hero").forEach((section) => {
   });
 });
 
+document.querySelectorAll(".hero .reveal").forEach((element) => {
+  element.classList.add("visible");
+});
+
 /* ---------- navigation ---------- */
 
 const navToggle = document.querySelector(".nav-toggle");
@@ -273,16 +277,86 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
 /* ---------- work scene iframes ---------- */
 
-document.querySelectorAll(".work-scene iframe").forEach((frame) => {
-  frame.addEventListener("error", () => {
-    const src = frame.getAttribute("src");
-    if (!src || frame.dataset.retry === "1") return;
-    frame.dataset.retry = "1";
-    setTimeout(() => {
-      frame.src = src;
-    }, 800);
+const workFrames = [...document.querySelectorAll(".work-scene iframe")];
+const workMobileQuery = window.matchMedia("(max-width: 860px), (pointer: coarse)");
+
+const workSrc = (frame) => frame.dataset.src || "";
+
+const isWorkLoaded = (frame) => {
+  const src = frame.getAttribute("src");
+  return Boolean(src) && src !== "about:blank" && src === workSrc(frame);
+};
+
+const loadWorkFrame = (frame) => {
+  const url = workSrc(frame);
+  if (!url || isWorkLoaded(frame)) return;
+  frame.src = url;
+};
+
+const unloadWorkFrame = (frame) => {
+  if (!frame.getAttribute("src")) return;
+  frame.removeAttribute("src");
+  frame.parentElement?.classList.remove("is-ready");
+};
+
+const syncWorkFrames = () => {
+  const visible = workFrames
+    .map((frame) => ({
+      frame,
+      ratio: Number(frame.dataset.visibleRatio || 0),
+    }))
+    .filter((item) => item.ratio > 0)
+    .sort((a, b) => b.ratio - a.ratio);
+
+  if (workMobileQuery.matches) {
+    const pick = visible[0]?.frame;
+    workFrames.forEach((frame) => {
+      if (frame === pick) loadWorkFrame(frame);
+      else unloadWorkFrame(frame);
+    });
+    return;
+  }
+
+  workFrames.forEach((frame) => {
+    if (Number(frame.dataset.visibleRatio || 0) > 0) loadWorkFrame(frame);
   });
-});
+};
+
+if (workFrames.length) {
+  const workObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const frame = entry.target.querySelector("iframe") || entry.target;
+        frame.dataset.visibleRatio = String(entry.intersectionRatio);
+      });
+      syncWorkFrames();
+    },
+    { rootMargin: "80px 0px", threshold: [0, 0.15, 0.35, 0.6, 1] }
+  );
+
+  workFrames.forEach((frame) => {
+    workObserver.observe(frame.closest(".work-scene") || frame);
+    frame.addEventListener("load", () => {
+      if (isWorkLoaded(frame)) frame.parentElement?.classList.add("is-ready");
+    });
+    frame.addEventListener("error", () => {
+      if (frame.dataset.retry === "1" || !workSrc(frame)) return;
+      frame.dataset.retry = "1";
+      window.setTimeout(() => {
+        if (Number(frame.dataset.visibleRatio || 0) > 0) frame.src = workSrc(frame);
+      }, 800);
+    });
+  });
+
+  workMobileQuery.addEventListener("change", syncWorkFrames);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && workMobileQuery.matches) {
+      workFrames.forEach(unloadWorkFrame);
+    } else {
+      syncWorkFrames();
+    }
+  });
+}
 
 /* ---------- photo share: silver-grain film roll ---------- */
 
@@ -398,7 +472,7 @@ if (heroImg && filmTrack) {
     const cell = document.createElement("button");
     cell.type = "button";
     cell.className = "film-frame";
-    cell.innerHTML = `<img src="${frame.src}" alt="${frame.alt}">`;
+    cell.innerHTML = `<img src="${frame.src}" alt="${frame.alt}" loading="lazy" decoding="async">`;
     cell.addEventListener("click", () => {
       if (filmTrack.dataset.dragged === "1") return;
       pause(2400);
