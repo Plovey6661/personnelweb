@@ -916,48 +916,16 @@ main {
   background: transparent;
 }
 
-.work-scene-stage .lvl-art {
+.work-scene-stage iframe {
   position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
+  left: -11%;
+  top: -4%;
+  width: 122%;
+  height: 122%;
   border: 0;
   pointer-events: none;
-  background:
-    radial-gradient(80% 70% at 50% 30%, rgba(0, 240, 255, .1), transparent 64%);
-  transition: transform .45s ease;
-}
-
-.work-scene-stage .lvl-art svg {
-  width: 100%;
-  height: 100%;
-}
-
-.work-scene:hover .work-scene-stage .lvl-art {
-  transform: scale(1.04);
-}
-
-.work-scene-stage .lvl-explode rect:nth-of-type(1) { --dy: -18px; }
-.work-scene-stage .lvl-explode rect:nth-of-type(2) { --dy: -7px; }
-.work-scene-stage .lvl-explode rect:nth-of-type(3) { --dy: 7px; }
-.work-scene-stage .lvl-explode rect:nth-of-type(4) { --dy: 18px; }
-
-.work-scene-stage .lvl-path .trace {
-  stroke-dasharray: 180;
-  stroke-dashoffset: 180;
-  animation: traceDrawScene 4.2s ease-in-out infinite;
-}
-
-.work-scene-stage .lvl-path .head {
-  offset-path: path("M26 96 L26 36 L56 36 A14 14 0 0 1 56 64 L100 64");
-}
-
-@keyframes traceDrawScene {
-  0% { stroke-dashoffset: 180; }
-  62%, 84% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: -180; }
+  background: transparent;
+  transform: none;
 }
 
 .work-scene-stage::after {

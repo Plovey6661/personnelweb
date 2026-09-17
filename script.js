@@ -271,6 +271,19 @@ startHeroTerminal();
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
+/* ---------- work scene iframes ---------- */
+
+document.querySelectorAll(".work-scene iframe").forEach((frame) => {
+  frame.addEventListener("error", () => {
+    const src = frame.getAttribute("src");
+    if (!src || frame.dataset.retry === "1") return;
+    frame.dataset.retry = "1";
+    setTimeout(() => {
+      frame.src = src;
+    }, 800);
+  });
+});
+
 /* ---------- photo share: silver-grain film roll ---------- */
 
 const heroImg = document.getElementById("photo-hero-img");
