@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Share+Tech+Mono&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=hud2">
-  <link rel="stylesheet" href="./game.css?v=hud2">
+  <link rel="stylesheet" href="./style.css?v=work2">
+  <link rel="stylesheet" href="./game.css?v=work2">
 </head>
 <body>
   <div class="scanlines" aria-hidden="true"></div>
@@ -164,7 +164,15 @@
                 <span class="work-scene-label">Scene 1</span>
                 <div class="work-scene-frame">
                   <div class="work-scene-stage">
-                    <iframe src="https://s001-cnc-assembly.lolamchan03.chatgpt.site/?scene=1&amp;demo=1" title="Scene 1 exploded view" tabindex="-1" loading="lazy"></iframe>
+                    <i class="lvl-art lvl-explode" aria-hidden="true">
+                      <svg viewBox="0 0 120 120">
+                        <line class="axis" x1="60" y1="14" x2="60" y2="106"/>
+                        <rect x="28" y="28" width="64" height="12"/>
+                        <rect x="28" y="44" width="64" height="12"/>
+                        <rect x="28" y="60" width="64" height="12"/>
+                        <rect x="28" y="76" width="64" height="12"/>
+                      </svg>
+                    </i>
                   </div>
                   <div class="work-scene-meta">
                     <span>01 / ASSEMBLY</span>
@@ -176,7 +184,17 @@
                 <span class="work-scene-label">Scene 2</span>
                 <div class="work-scene-frame">
                   <div class="work-scene-stage">
-                    <iframe src="https://s001-cnc-assembly.lolamchan03.chatgpt.site/?scene=2&amp;demo=1" title="Scene 2 manual cutting" tabindex="-1" loading="lazy"></iframe>
+                    <i class="lvl-art lvl-cut" aria-hidden="true">
+                      <svg viewBox="0 0 120 120">
+                        <g class="tool">
+                          <rect x="54" y="16" width="12" height="28"/>
+                          <path d="M54 44 L60 56 L66 44 Z"/>
+                        </g>
+                        <circle class="spark" cx="60" cy="62" r="3.2"/>
+                        <rect class="stock" x="30" y="64" width="60" height="18"/>
+                        <line class="bed" x1="16" y1="92" x2="104" y2="92"/>
+                      </svg>
+                    </i>
                   </div>
                   <div class="work-scene-meta">
                     <span>02 / MACHINING</span>
@@ -188,7 +206,13 @@
                 <span class="work-scene-label">Scene 3</span>
                 <div class="work-scene-frame">
                   <div class="work-scene-stage">
-                    <iframe src="https://s001-cnc-assembly.lolamchan03.chatgpt.site/?scene=3&amp;demo=1" title="Scene 3 path playback" tabindex="-1" loading="lazy"></iframe>
+                    <i class="lvl-art lvl-path" aria-hidden="true">
+                      <svg viewBox="0 0 120 120">
+                        <path class="grid" d="M18 30 H102 M18 52 H102 M18 74 H102 M18 96 H102 M28 18 V104 M52 18 V104 M76 18 V104 M100 18 V104"/>
+                        <path class="trace" d="M26 96 L26 36 L56 36 A14 14 0 0 1 56 64 L100 64"/>
+                        <circle class="head" r="3.2"/>
+                      </svg>
+                    </i>
                   </div>
                   <div class="work-scene-meta">
                     <span>03 / MOTION</span>
@@ -200,7 +224,18 @@
                 <span class="work-scene-label">Scene 4</span>
                 <div class="work-scene-frame">
                   <div class="work-scene-stage">
-                    <iframe src="https://s001-cnc-assembly.lolamchan03.chatgpt.site/?scene=4&amp;demo=1" title="Scene 4 free machining" tabindex="-1" loading="lazy"></iframe>
+                    <i class="lvl-art lvl-code" aria-hidden="true">
+                      <svg viewBox="0 0 120 120">
+                        <g class="lines">
+                          <rect x="22" y="24" width="40" height="5"/>
+                          <rect x="22" y="38" width="62" height="5"/>
+                          <rect x="22" y="52" width="32" height="5"/>
+                          <rect x="22" y="66" width="54" height="5"/>
+                        </g>
+                        <rect class="caret" x="22" y="80" width="5" height="7"/>
+                        <path class="cut" d="M22 100 L52 100 L68 88 L102 88"/>
+                      </svg>
+                    </i>
                   </div>
                   <div class="work-scene-meta">
                     <span>04 / FREE MACHINING</span>
@@ -568,7 +603,7 @@
     </svg>
   </div>
 
-  <script src="./script.js?v=hud2"></script>
+  <script src="./script.js?v=work2"></script>
   <script src="./game.js"></script>
 </body>
 </html>
